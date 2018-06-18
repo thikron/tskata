@@ -1,4 +1,6 @@
-module.exports = function(config) {
+import { ITslintPreprocessorConfig } from 'karma-tslint';
+
+export = (config: any) => {
     config.set({
         frameworks: ["jasmine", "karma-typescript"],
         files: [
@@ -6,7 +8,7 @@ module.exports = function(config) {
             "spec/**/*.ts"
         ],
         preprocessors: {
-            '**/*.ts': ['typescript']
+            '**/*.ts': ['tslint', 'typescript']
         },
 
         typescriptPreprocessor: {
@@ -18,6 +20,14 @@ module.exports = function(config) {
                 return path.replace(/\.ts$/, '.js');
             }
         },
+        tslintPreprocessor: {
+            configuration: 'default',
+            formatter: 'prose',
+            formattersDirectory: 'formatters-dir',
+            rulesDirectory: 'rules-dir',
+            stopOnFailure: true,
+            fix: true
+        } as ITslintPreprocessorConfig,
         reporters: ["progress", "karma-typescript"],
         browsers: ["Chrome"]
     });
