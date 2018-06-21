@@ -1,14 +1,21 @@
-import { ITslintPreprocessorConfig } from 'karma-tslint';
+import {ITslintPreprocessorConfig} from "karma-tslint/lib";
 
 export = (config: any) => {
     config.set({
-        frameworks: ["jasmine", "karma-typescript"],
+        basePath: '',
+
+        frameworks: ['jasmine', 'karma-typescript'],
+
         files: [
             "src/**/*.ts",
             "spec/**/*.ts"
         ],
+
+        exclude: [],
+
+
         preprocessors: {
-            '**/*.ts': ['tslint', 'typescript']
+            '**/*.ts': ['typescript']
         },
 
         typescriptPreprocessor: {
@@ -16,10 +23,11 @@ export = (config: any) => {
                 sourceMap: true, // generate source maps
                 noResolve: false // enforce type resolution
             },
-            transformPath: function(path) {
+            transformPath: function (path) {
                 return path.replace(/\.ts$/, '.js');
             }
         },
+
         tslintPreprocessor: {
             configuration: 'default',
             formatter: 'prose',
@@ -28,7 +36,21 @@ export = (config: any) => {
             stopOnFailure: true,
             fix: true
         } as ITslintPreprocessorConfig,
-        reporters: ["progress", "karma-typescript"],
-        browsers: ["Chrome"]
-    });
-};
+
+        reporters: ['progress'],
+
+        port: 9876,
+
+        colors: true,
+
+        logLevel: config.LOG_INFO,
+
+        autoWatch: true,
+
+        browsers: ['Chrome'],
+
+        singleRun: false,
+
+        concurrency: Infinity
+    })
+}
